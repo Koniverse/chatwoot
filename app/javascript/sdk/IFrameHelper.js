@@ -2,23 +2,23 @@ import Cookies from 'js-cookie';
 import {
   addClasses,
   loadCSS,
-  removeClasses,
   onLocationChangeListener,
+  removeClasses,
 } from './DOMHelpers';
 import {
+  addUnreadClass,
   body,
-  widgetHolder as defaultWidgetHolder,
-  createBubbleHolder,
-  createBubbleIcon,
+  bubbleHolder,
   bubbleSVG,
   chatBubble,
   closeBubble,
-  bubbleHolder,
-  onClickChatBubble,
+  createBubbleHolder,
+  createBubbleIcon,
   onBubbleClick,
-  setBubbleText,
-  addUnreadClass,
+  onClickChatBubble,
   removeUnreadClass,
+  setBubbleText,
+  widgetHolder as defaultWidgetHolder,
 } from './bubbleHelpers';
 import { isWidgetColorLighter } from 'shared/helpers/colorHelper';
 import { dispatchWindowEvent } from 'shared/helpers/CustomEventHelper';

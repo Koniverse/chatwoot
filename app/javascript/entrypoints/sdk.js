@@ -212,6 +212,51 @@ const runSDK = ({ baseUrl, websiteToken, customWidgetHolder }) => {
         baseUrl: window.$chatwoot.baseUrl,
         websiteToken: window.$chatwoot.websiteToken,
       });
+      if (chatwootSettings.initScreen) {
+        iframe.src += `#/${chatwootSettings.initScreen}`;
+      }
+
+      window.$chatwoot.resetTriggered = true;
+    },
+    getConversationKey() {
+      return Cookies.get('cw_conversation');
+    },
+    getIframeUrl() {
+      return IFrameHelper.getIframeUrl();
+    },
+    newConversation() {
+      const oldKey = this.getConversationKey();
+      this.reset();
+
+      return new Promise(resolve => {
+        const checkInterval = setInterval(() => {
+          const newKey = this.getConversationKey();
+          if (newKey && oldKey !== newKey) {
+            clearInterval(checkInterval);
+            resolve(newKey);
+          }
+        }, 100);
+      });
+    },
+    switchConversation(conversationToken) {
+      if (!conversationToken) {
+        throw new Error('Conversation ID is required');
+      }
+
+      const currentToken = this.getConversationKey();
+      if (currentToken === conversationToken) {
+        return;
+      }
+
+      const iframe = IFrameHelper.getAppFrame();
+      iframe.src = IFrameHelper.getUrl({
+        baseUrl: window.$chatwoot.baseUrl,
+        websiteToken: window.$chatwoot.websiteToken,
+      });
+      iframe.src += `&cw_conversation=${conversationToken}`;
+      if (chatwootSettings.initScreen) {
+        iframe.src += `#/${chatwootSettings.initScreen}`;
+      }
 
       window.$chatwoot.resetTriggered = true;
     },
