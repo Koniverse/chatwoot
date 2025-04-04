@@ -122,12 +122,14 @@ export default {
           :intro-heading="channelConfig.welcomeTitle"
           :intro-body="channelConfig.welcomeTagline"
           :avatar-url="channelConfig.avatarUrl"
+          :show-close-button="appConfig.showCloseButton"
           :show-popout-button="appConfig.showPopoutButton"
         />
         <ChatHeader
           v-if="isHeaderCollapsed"
           :title="channelConfig.websiteName"
           :avatar-url="channelConfig.avatarUrl"
+          :show-close-button="appConfig.showCloseButton"
           :show-popout-button="appConfig.showPopoutButton"
           :available-agents="availableAgents"
           :show-back-button="showBackButton"

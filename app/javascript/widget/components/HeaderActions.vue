@@ -11,6 +11,10 @@ export default {
   components: { FluentIcon },
   mixins: [configMixin],
   props: {
+    showCloseButton: {
+      type: Boolean,
+      default: true,
+    },
     showPopoutButton: {
       type: Boolean,
       default: false,
@@ -99,6 +103,7 @@ export default {
       <FluentIcon icon="open" size="22" class="text-n-slate-12" />
     </button>
     <button
+      v-if="showCloseButton"
       class="button transparent compact close-button"
       :class="{
         'rn-close-button': isRNWebView,

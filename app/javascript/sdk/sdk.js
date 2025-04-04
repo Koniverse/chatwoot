@@ -5,14 +5,18 @@ export const SDK_CSS = `
 }
 
 .woot-widget-holder {
+
+}
+
+.woot-widget-holder:not(.woot-elements--custom) {
   box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
   opacity: 1;
   will-change: transform, opacity;
   transform: translateY(0);
-  overflow: hidden !important;
-  position: fixed !important;
   transition: opacity 0.2s linear, transform 0.25s linear;
+  position: fixed !important;
   z-index: 2147483000 !important;
+  overflow: hidden !important;
 }
 
 .woot-widget-holder.woot-widget-holder--flat {
@@ -179,7 +183,7 @@ export const SDK_CSS = `
   transform: rotate(-45deg);
 }
 
-.woot--hide {
+.woot--hide:not(.woot-elements--custom) {
   bottom: -100vh !important;
   top: unset !important;
   opacity: 0;
@@ -190,7 +194,7 @@ export const SDK_CSS = `
 .woot-widget--without-bubble {
   bottom: 20px !important;
 }
-.woot-widget-holder.woot--hide{
+.woot-widget-holder.woot--hide:not(.woot-elements--custom) {
   transform: translateY(40px);
 }
 .woot-widget-bubble.woot--close {
@@ -278,7 +282,7 @@ export const SDK_CSS = `
 }
 
 @media only screen and (min-width: 667px) {
-  .woot-widget-holder {
+  .woot-widget-holder:not(.woot-elements--custom) {
     border-radius: 16px;
     bottom: 104px;
     height: calc(90% - 64px - 20px);

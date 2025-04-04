@@ -18,7 +18,7 @@ import {
 import { setCookieWithDomain } from '../sdk/cookieHelpers';
 import { SDK_SET_BUBBLE_VISIBILITY } from 'shared/constants/sharedFrameEvents';
 
-const runSDK = ({ baseUrl, websiteToken }) => {
+const runSDK = ({ baseUrl, websiteToken, customWidgetHolder }) => {
   if (window.$chatwoot) {
     return;
   }
@@ -49,26 +49,46 @@ const runSDK = ({ baseUrl, websiteToken }) => {
     locale = window.navigator.language.replace('-', '_');
   }
 
+  const customSetting = {
+    position: chatwootSettings.position === 'left' ? 'left' : 'right',
+    hideMessageBubble: chatwootSettings.hideMessageBubble || false,
+  };
+
+  // Overwrite setting for custom widget holder
+  if (customWidgetHolder) {
+    customSetting.position = 'custom';
+    customSetting.hideMessageBubble = true;
+  }
+
   window.$chatwoot = {
     baseUrl,
     baseDomain,
     hasLoaded: false,
-    hideMessageBubble: chatwootSettings.hideMessageBubble || false,
+    hideMessageBubble: customSetting.hideMessageBubble || false,
     isOpen: false,
-    position: chatwootSettings.position === 'left' ? 'left' : 'right',
+    position: customSetting.position,
     websiteToken,
     locale,
     useBrowserLanguage: chatwootSettings.useBrowserLanguage || false,
     type: getBubbleView(chatwootSettings.type),
     launcherTitle: chatwootSettings.launcherTitle || '',
     showPopoutButton: chatwootSettings.showPopoutButton || false,
+    showCloseButton: chatwootSettings.showCloseButton ?? true,
     showUnreadMessagesDialog: chatwootSettings.showUnreadMessagesDialog ?? true,
     widgetStyle: getWidgetStyle(chatwootSettings.widgetStyle) || 'standard',
     resetTriggered: false,
     darkMode: getDarkMode(chatwootSettings.darkMode),
+    initScreen: chatwootSettings.initScreen,
+    customWidgetHolder,
 
     toggle(state) {
       IFrameHelper.events.toggleBubble(state);
+    },
+
+    openScreen(screenName) {
+      IFrameHelper.sendMessage('open-screen', {
+        screen: screenName,
+      });
     },
 
     toggleBubbleVisibility(visibility) {
@@ -200,6 +220,8 @@ const runSDK = ({ baseUrl, websiteToken }) => {
   IFrameHelper.createFrame({
     baseUrl,
     websiteToken,
+    customWidgetHolder,
+    initScreen: chatwootSettings.initScreen,
   });
 };
 

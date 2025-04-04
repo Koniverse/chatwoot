@@ -19,6 +19,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  showCloseButton: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const containerClasses = computed(() => [
@@ -39,6 +43,7 @@ const containerClasses = computed(() => [
       />
       <HeaderActions
         :show-popout-button="showPopoutButton"
+        :show-close-button="showCloseButton"
         :show-end-conversation-button="false"
       />
     </div>

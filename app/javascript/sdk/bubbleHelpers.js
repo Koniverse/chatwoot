@@ -67,14 +67,14 @@ export const createBubbleHolder = hideMessageBubble => {
 
 export const onBubbleClick = (props = {}) => {
   const { toggleValue } = props;
-  const { isOpen } = window.$chatwoot;
+  const { isOpen, customWidgetHolder } = window.$chatwoot;
   if (isOpen !== toggleValue) {
     const newIsOpen = toggleValue === undefined ? !isOpen : toggleValue;
     window.$chatwoot.isOpen = newIsOpen;
 
     toggleClass(chatBubble, 'woot--hide');
     toggleClass(closeBubble, 'woot--hide');
-    toggleClass(widgetHolder, 'woot--hide');
+    toggleClass(customWidgetHolder || widgetHolder, 'woot--hide');
     IFrameHelper.events.onBubbleToggle(newIsOpen);
 
     if (!newIsOpen) {

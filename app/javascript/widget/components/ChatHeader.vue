@@ -25,6 +25,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    showCloseButton: {
+      type: Boolean,
+      default: true,
+    },
     showBackButton: {
       type: Boolean,
       default: false,
@@ -84,6 +88,9 @@ export default {
         </div>
       </div>
     </div>
-    <HeaderActions :show-popout-button="showPopoutButton" />
+    <HeaderActions
+      :show-popout-button="showPopoutButton"
+      :show-close-button="showCloseButton"
+    />
   </header>
 </template>

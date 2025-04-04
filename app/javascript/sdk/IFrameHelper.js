@@ -7,7 +7,7 @@ import {
 } from './DOMHelpers';
 import {
   body,
-  widgetHolder,
+  widgetHolder as defaultWidgetHolder,
   createBubbleHolder,
   createBubbleIcon,
   bubbleSVG,
@@ -46,13 +46,19 @@ const updateCampaignReadStatus = baseDomain => {
   });
 };
 
+let widgetHolder = defaultWidgetHolder;
+
 export const IFrameHelper = {
   getUrl({ baseUrl, websiteToken }) {
     return `${baseUrl}/widget?website_token=${websiteToken}`;
   },
-  createFrame: ({ baseUrl, websiteToken }) => {
+  createFrame: ({ baseUrl, websiteToken, customWidgetHolder, initScreen }) => {
     if (IFrameHelper.getAppFrame()) {
       return;
+    }
+
+    if (customWidgetHolder) {
+      widgetHolder = customWidgetHolder;
     }
 
     loadCSS();
@@ -62,6 +68,11 @@ export const IFrameHelper = {
     if (cwCookie) {
       widgetUrl = `${widgetUrl}&cw_conversation=${cwCookie}`;
     }
+
+    if (initScreen) {
+      widgetUrl = `${widgetUrl}#/${initScreen}`;
+    }
+
     iframe.src = widgetUrl;
     iframe.allow =
       'camera;microphone;fullscreen;display-capture;picture-in-picture;clipboard-write;';
@@ -79,7 +90,9 @@ export const IFrameHelper = {
     addClasses(widgetHolder, holderClassName);
     widgetHolder.id = 'cw-widget-holder';
     widgetHolder.appendChild(iframe);
-    body.appendChild(widgetHolder);
+    if (!customWidgetHolder) {
+      body.appendChild(widgetHolder);
+    }
     IFrameHelper.initPostMessageCommunication();
     IFrameHelper.initWindowSizeListener();
     IFrameHelper.preventDefaultScroll();
@@ -157,6 +170,7 @@ export const IFrameHelper = {
         position: window.$chatwoot.position,
         hideMessageBubble: window.$chatwoot.hideMessageBubble,
         showPopoutButton: window.$chatwoot.showPopoutButton,
+        showCloseButton: window.$chatwoot.showCloseButton,
         widgetStyle: window.$chatwoot.widgetStyle,
         darkMode: window.$chatwoot.darkMode,
         showUnreadMessagesDialog: window.$chatwoot.showUnreadMessagesDialog,

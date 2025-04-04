@@ -17,6 +17,7 @@ const state = {
   position: 'right',
   referrerHost: '',
   showPopoutButton: false,
+  showCloseButton: true,
   widgetColor: '',
   widgetStyle: 'standard',
   darkMode: 'light',
@@ -41,6 +42,7 @@ export const actions = {
     { commit },
     {
       showPopoutButton,
+      showCloseButton,
       position,
       hideMessageBubble,
       showUnreadMessagesDialog,
@@ -52,6 +54,7 @@ export const actions = {
       hideMessageBubble: !!hideMessageBubble,
       position: position || 'right',
       showPopoutButton: !!showPopoutButton,
+      showCloseButton: !!showCloseButton,
       showUnreadMessagesDialog: !!showUnreadMessagesDialog,
       widgetStyle,
       darkMode,
@@ -84,6 +87,7 @@ export const actions = {
 export const mutations = {
   [SET_WIDGET_APP_CONFIG]($state, data) {
     $state.showPopoutButton = data.showPopoutButton;
+    $state.showCloseButton = data.showCloseButton;
     $state.position = data.position;
     $state.hideMessageBubble = data.hideMessageBubble;
     $state.widgetStyle = data.widgetStyle;
