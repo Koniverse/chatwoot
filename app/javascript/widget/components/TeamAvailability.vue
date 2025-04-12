@@ -9,7 +9,7 @@ import { CHATWOOT_ON_START_CONVERSATION } from '../constants/sdkEvents';
 import GroupedAvatars from 'widget/components/GroupedAvatars.vue';
 
 export default {
-  name: 'TeamAvailability',
+  name: ' TeamAvailability',
   components: {
     GroupedAvatars,
   },

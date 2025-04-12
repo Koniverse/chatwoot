@@ -52,7 +52,7 @@ export const IFrameHelper = {
   getUrl({ baseUrl, websiteToken }) {
     return `${baseUrl}/widget?website_token=${websiteToken}`;
   },
-  createFrame: ({ baseUrl, websiteToken, customWidgetHolder, initScreen }) => {
+  createFrame: ({ baseUrl, websiteToken, customWidgetHolder }) => {
     if (IFrameHelper.getAppFrame()) {
       return;
     }
@@ -67,10 +67,6 @@ export const IFrameHelper = {
     let widgetUrl = IFrameHelper.getUrl({ baseUrl, websiteToken });
     if (cwCookie) {
       widgetUrl = `${widgetUrl}&cw_conversation=${cwCookie}`;
-    }
-
-    if (initScreen) {
-      widgetUrl = `${widgetUrl}#/${initScreen}`;
     }
 
     iframe.src = widgetUrl;
@@ -171,6 +167,8 @@ export const IFrameHelper = {
         hideMessageBubble: window.$chatwoot.hideMessageBubble,
         showPopoutButton: window.$chatwoot.showPopoutButton,
         showCloseButton: window.$chatwoot.showCloseButton,
+        skipHome: window.$chatwoot.skipHome,
+        autoOpen: window.$chatwoot.autoOpen,
         widgetStyle: window.$chatwoot.widgetStyle,
         darkMode: window.$chatwoot.darkMode,
         showUnreadMessagesDialog: window.$chatwoot.showUnreadMessagesDialog,

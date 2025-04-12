@@ -18,6 +18,8 @@ const state = {
   referrerHost: '',
   showPopoutButton: false,
   showCloseButton: true,
+  skipHome: false, // Auto start conversation
+  autoOpen: false,
   widgetColor: '',
   widgetStyle: 'standard',
   darkMode: 'light',
@@ -27,6 +29,7 @@ const state = {
 export const getters = {
   getAppConfig: $state => $state,
   isRightAligned: $state => $state.position === 'right',
+  getSkipHome: $state => $state.skipHome,
   getHideMessageBubble: $state => $state.hideMessageBubble,
   getIsWidgetOpen: $state => $state.isWidgetOpen,
   getWidgetColor: $state => $state.widgetColor,
@@ -43,6 +46,8 @@ export const actions = {
     {
       showPopoutButton,
       showCloseButton,
+      skipHome,
+      autoOpen,
       position,
       hideMessageBubble,
       showUnreadMessagesDialog,
@@ -55,10 +60,16 @@ export const actions = {
       position: position || 'right',
       showPopoutButton: !!showPopoutButton,
       showCloseButton: !!showCloseButton,
+      skipHome: !!skipHome,
+      autoOpen: !!autoOpen,
       showUnreadMessagesDialog: !!showUnreadMessagesDialog,
       widgetStyle,
       darkMode,
     });
+
+    if (autoOpen) {
+      commit(TOGGLE_WIDGET_OPEN, true);
+    }
   },
   toggleWidgetOpen({ commit }, isWidgetOpen) {
     commit(TOGGLE_WIDGET_OPEN, isWidgetOpen);
@@ -88,6 +99,8 @@ export const mutations = {
   [SET_WIDGET_APP_CONFIG]($state, data) {
     $state.showPopoutButton = data.showPopoutButton;
     $state.showCloseButton = data.showCloseButton;
+    $state.skipHome = data.skipHome;
+    $state.autoOpen = data.autoOpen;
     $state.position = data.position;
     $state.hideMessageBubble = data.hideMessageBubble;
     $state.widgetStyle = data.widgetStyle;

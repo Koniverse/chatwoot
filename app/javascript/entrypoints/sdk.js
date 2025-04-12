@@ -64,7 +64,7 @@ const runSDK = ({ baseUrl, websiteToken, customWidgetHolder }) => {
     baseUrl,
     baseDomain,
     hasLoaded: false,
-    hideMessageBubble: customSetting.hideMessageBubble || false,
+    hideMessageBubble: customSetting.hideMessageBubble || !!customWidgetHolder,
     isOpen: false,
     position: customSetting.position,
     websiteToken,
@@ -74,11 +74,12 @@ const runSDK = ({ baseUrl, websiteToken, customWidgetHolder }) => {
     launcherTitle: chatwootSettings.launcherTitle || '',
     showPopoutButton: chatwootSettings.showPopoutButton || false,
     showCloseButton: chatwootSettings.showCloseButton ?? true,
+    skipHome: chatwootSettings.skipHome ?? true,
+    autoOpen: !!customWidgetHolder,
     showUnreadMessagesDialog: chatwootSettings.showUnreadMessagesDialog ?? true,
     widgetStyle: getWidgetStyle(chatwootSettings.widgetStyle) || 'standard',
     resetTriggered: false,
     darkMode: getDarkMode(chatwootSettings.darkMode),
-    initScreen: chatwootSettings.initScreen,
     customWidgetHolder,
 
     toggle(state) {
@@ -201,7 +202,9 @@ const runSDK = ({ baseUrl, websiteToken, customWidgetHolder }) => {
 
     reset() {
       if (window.$chatwoot.isOpen) {
-        IFrameHelper.events.toggleBubble();
+        IFrameHelper.events.toggleBubble(
+          customWidgetHolder ? 'open' : undefined
+        );
       }
 
       Cookies.remove('cw_conversation');
@@ -212,9 +215,6 @@ const runSDK = ({ baseUrl, websiteToken, customWidgetHolder }) => {
         baseUrl: window.$chatwoot.baseUrl,
         websiteToken: window.$chatwoot.websiteToken,
       });
-      if (chatwootSettings.initScreen) {
-        iframe.src += `#/${chatwootSettings.initScreen}`;
-      }
 
       window.$chatwoot.resetTriggered = true;
     },
@@ -254,11 +254,9 @@ const runSDK = ({ baseUrl, websiteToken, customWidgetHolder }) => {
         websiteToken: window.$chatwoot.websiteToken,
       });
       iframe.src += `&cw_conversation=${conversationToken}`;
-      if (chatwootSettings.initScreen) {
-        iframe.src += `#/${chatwootSettings.initScreen}`;
-      }
 
       window.$chatwoot.resetTriggered = true;
+      IFrameHelper.events.toggleBubble('open');
     },
   };
 
@@ -266,7 +264,6 @@ const runSDK = ({ baseUrl, websiteToken, customWidgetHolder }) => {
     baseUrl,
     websiteToken,
     customWidgetHolder,
-    initScreen: chatwootSettings.initScreen,
   });
 };
 

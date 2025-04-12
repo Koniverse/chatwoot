@@ -4,6 +4,7 @@ import { mapGetters } from 'vuex';
 import routerMixin from 'widget/mixins/routerMixin';
 import configMixin from 'widget/mixins/configMixin';
 import ArticleContainer from '../components/pageComponents/Home/Article/ArticleContainer.vue';
+
 export default {
   name: 'Home',
   components: {
@@ -13,10 +14,19 @@ export default {
   mixins: [configMixin, routerMixin],
   computed: {
     ...mapGetters({
+      skipHome: 'appConfig/getSkipHome',
       availableAgents: 'agent/availableAgents',
       conversationSize: 'conversation/getConversationSize',
       unreadMessageCount: 'conversation/getUnreadMessageCount',
     }),
+  },
+  watch: {
+    skipHome: {
+      immediate: true,
+      handler() {
+        this.doSkipHome();
+      },
+    },
   },
   methods: {
     startConversation() {
@@ -24,6 +34,11 @@ export default {
         return this.replaceRoute('prechat-form');
       }
       return this.replaceRoute('messages');
+    },
+    doSkipHome() {
+      if (this.skipHome) {
+        this.startConversation();
+      }
     },
   },
 };
