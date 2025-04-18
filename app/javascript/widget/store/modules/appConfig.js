@@ -19,10 +19,11 @@ const state = {
   showPopoutButton: false,
   showCloseButton: true,
   skipHome: false, // Auto start conversation
+  showHeader: true,
   autoOpen: false,
   widgetColor: '',
   widgetStyle: 'standard',
-  darkMode: 'light',
+  darkMode: 'dark',
   isUpdatingRoute: false,
 };
 
@@ -30,6 +31,7 @@ export const getters = {
   getAppConfig: $state => $state,
   isRightAligned: $state => $state.position === 'right',
   getSkipHome: $state => $state.skipHome,
+  getShowHeader: $state => $state.showHeader,
   getHideMessageBubble: $state => $state.hideMessageBubble,
   getIsWidgetOpen: $state => $state.isWidgetOpen,
   getWidgetColor: $state => $state.widgetColor,
@@ -47,6 +49,7 @@ export const actions = {
       showPopoutButton,
       showCloseButton,
       skipHome,
+      showHeader,
       autoOpen,
       position,
       hideMessageBubble,
@@ -61,6 +64,7 @@ export const actions = {
       showPopoutButton: !!showPopoutButton,
       showCloseButton: !!showCloseButton,
       skipHome: !!skipHome,
+      showHeader: !!showHeader,
       autoOpen: !!autoOpen,
       showUnreadMessagesDialog: !!showUnreadMessagesDialog,
       widgetStyle,
@@ -100,6 +104,7 @@ export const mutations = {
     $state.showPopoutButton = data.showPopoutButton;
     $state.showCloseButton = data.showCloseButton;
     $state.skipHome = data.skipHome;
+    $state.showHeader = data.showHeader;
     $state.autoOpen = data.autoOpen;
     $state.position = data.position;
     $state.hideMessageBubble = data.hideMessageBubble;

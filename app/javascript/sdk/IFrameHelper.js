@@ -168,6 +168,7 @@ export const IFrameHelper = {
         showPopoutButton: window.$chatwoot.showPopoutButton,
         showCloseButton: window.$chatwoot.showCloseButton,
         skipHome: window.$chatwoot.skipHome,
+        showHeader: window.$chatwoot.showHeader,
         autoOpen: window.$chatwoot.autoOpen,
         widgetStyle: window.$chatwoot.widgetStyle,
         darkMode: window.$chatwoot.darkMode,

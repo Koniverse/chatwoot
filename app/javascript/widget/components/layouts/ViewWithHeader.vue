@@ -109,6 +109,7 @@ export default {
   >
     <div class="relative flex flex-col h-full">
       <div
+        v-if="appConfig.showHeader"
         :class="{
           expanded: !isHeaderCollapsed,
           collapsed: isHeaderCollapsed,

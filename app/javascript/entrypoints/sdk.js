@@ -75,6 +75,7 @@ const runSDK = ({ baseUrl, websiteToken, customWidgetHolder }) => {
     showPopoutButton: chatwootSettings.showPopoutButton || false,
     showCloseButton: chatwootSettings.showCloseButton ?? true,
     skipHome: chatwootSettings.skipHome ?? true,
+    showHeader: chatwootSettings.showHeader ?? true,
     autoOpen: !!customWidgetHolder,
     showUnreadMessagesDialog: chatwootSettings.showUnreadMessagesDialog ?? true,
     widgetStyle: getWidgetStyle(chatwootSettings.widgetStyle) || 'standard',
